@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="color-scheme" content="light">
+<title>A small question</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+  href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600&family=Shantell+Sans:wght@500;700&display=swap"
+  rel="stylesheet">
+
+<style>
+  :root {
+    --white: #ffffff;
+    --mist: #f1f7ee;      /* faint green wash */
+    --dew: #dcebd6;       /* background foliage */
+    --sprout: #9ccb8a;    /* light leaf */
+    --leaf: #3f8f5b;      /* main green */
+    --fern: #1f4d36;      /* text, outlines */
+
+    --display: "Shantell Sans", "Comic Sans MS",
+      "Trebuchet MS", sans-serif;
+    --body: "Figtree", "Avenir Next", "Segoe UI",
+      system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    overflow-x: clip;
+  }
+
+  body {
+    min-height: 100vh;
+    min-height: 100svh;
+    background:
+      radial-gradient(120% 70% at 50% 0%,
+        var(--mist) 0%, var(--white) 62%);
+    background-color: var(--white);
+    color: var(--fern);
+    font-family: var(--body);
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1.25rem 3rem;
+  }
+
+  /* ---------- background foliage ---------- */
+
+  .sprig {
+    position: fixed;
+    width: min(46vw, 300px);
+    color: var(--dew);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .sprig--top {
+    top: -24px;
+    left: -30px;
+    transform-origin: 0 0;
+    animation: sway-a 9s ease-in-out infinite alternate;
+  }
+  .sprig--bottom {
+    bottom: -24px;
+    right: -30px;
+    transform-origin: 50% 50%;
+    animation: sway-b 11s ease-in-out infinite alternate;
+  }
+  @keyframes sway-a {
+    from { transform: rotate(-2deg); }
+    to   { transform: rotate(3deg); }
+  }
+  @keyframes sway-b {
+    from { transform: rotate(182deg); }
+    to   { transform: rotate(177deg); }
+  }
+
+  .drift {
+    position: fixed;
+    top: -8vh;
+    width: 14px;
+    height: 14px;
+    background: var(--sprout);
+    border-radius: 100% 0 100% 0;
+    opacity: 0.55;
+    pointer-events: none;
+    z-index: 0;
+    animation: fall linear infinite;
+  }
+  .drift:nth-child(1) { left: 8%;  animation-duration: 19s;
+    animation-delay: -3s; }
+  .drift:nth-child(2) { left: 24%; animation-duration: 25s;
+    animation-delay: -14s; width: 10px; height: 10px; }
+  .drift:nth-child(3) { left: 47%; animation-duration: 22s;
+    animation-delay: -8s; background: var(--dew);
+    opacity: 0.9; }
+  .drift:nth-child(4) { left: 68%; animation-duration: 28s;
+    animation-delay: -20s; width: 11px; height: 11px; }
+  .drift:nth-child(5) { left: 84%; animation-duration: 21s;
+    animation-delay: -11s; }
+  .drift:nth-child(6) { left: 93%; animation-duration: 26s;
+    animation-delay: -1s; background: var(--dew);
+    opacity: 0.9; width: 18px; height: 18px; }
+
+  @keyframes fall {
+    0%   { transform: translate(0, 0) rotate(0deg); }
+    25%  { transform: translate(26px, 29vh) rotate(110deg); }
+    50%  { transform: translate(-18px, 58vh) rotate(200deg); }
+    75%  { transform: translate(22px, 87vh) rotate(300deg); }
+    100% { transform: translate(-8px, 118vh) rotate(380deg); }
+  }
+
+  /* ---------- layout ---------- */
+
+  main {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 26rem;
+    text-align: center;
+  }
+
+  .plant {
+    display: block;
+    width: min(52vw, 210px);
+    height: auto;
+    margin: 0 auto 0.5rem;
+    overflow: visible;
+  }
+
+  .greeting {
+    margin: 0;
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 1.35rem;
+    color: var(--leaf);
+    animation: rise 0.7s 0.3s ease-out backwards;
+  }
+
+  h1 {
+    margin: 0.1rem 0 0.6rem;
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(2.5rem, 11.5vw, 3.9rem);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+    animation: rise 0.8s 0.6s ease-out backwards;
+  }
+  h1:focus { outline: none; }
+  h1.swap { animation: pop 0.6s ease-out; }
+
+  .lede {
+    margin: 0 auto;
+    max-width: 21rem;
+    text-wrap: pretty;
+    animation: rise 0.8s 0.95s ease-out backwards;
+  }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(14px); }
+  }
+  @keyframes pop {
+    0%   { opacity: 0; transform: scale(0.8); }
+    60%  { opacity: 1; transform: scale(1.06); }
+    100% { transform: scale(1); }
+  }
+
+  /* ---------- the question ---------- */
+
+  .choices {
+    margin-top: 1.6rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.9rem;
+    animation: rise 0.8s 1.5s ease-out backwards;
+  }
+
+  .yes {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: var(--white);
+    background: var(--leaf);
+    border: 0;
+    border-radius: 999px;
+    padding: 0.85rem 2.2rem;
+    cursor: pointer;
+    box-shadow: 0 5px 0 var(--fern);
+    transition: transform 0.15s, box-shadow 0.15s,
+      background 0.15s;
+  }
+  .yes:hover {
+    background: #378552;
+    transform: translateY(-2px);
+    box-shadow: 0 7px 0 var(--fern);
+  }
+  .yes:active {
+    transform: translateY(4px);
+    box-shadow: 0 1px 0 var(--fern);
+  }
+
+  .no {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--body);
+    font-size: 0.95rem;
+    color: var(--leaf);
+    background: none;
+    border: 0;
+    border-radius: 999px;
+    padding: 0.4rem 0.8rem;
+    cursor: pointer;
+    transition:
+      transform 0.7s cubic-bezier(0.3, 1.4, 0.5, 1),
+      opacity 0.7s;
+  }
+  .no::before {
+    content: "";
+    width: 11px;
+    height: 11px;
+    background: var(--sprout);
+    border-radius: 100% 0 100% 0;
+  }
+  .no.gone {
+    transform: translate(70vw, -140px) rotate(240deg)
+      !important;
+    opacity: 0;
+    transition:
+      transform 0.9s cubic-bezier(0.5, 0, 0.9, 0.4),
+      opacity 0.9s;
+  }
+
+  .hint {
+    min-height: 1.6em;
+    margin: 0;
+    font-size: 0.95rem;
+    color: var(--leaf);
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--fern);
+    outline-offset: 4px;
+  }
+
+  /* ---------- the details (a plant tag) ---------- */
+
+  .details {
+    margin-top: 1.6rem;
+    animation: unfold 0.8s 0.25s
+      cubic-bezier(0.2, 1.2, 0.4, 1) backwards;
+  }
+  @keyframes unfold {
+    from {
+      opacity: 0;
+      transform: translateY(26px) rotate(-5deg) scale(0.9);
+    }
+  }
+
+  .tag {
+    position: relative;
+    margin: 0 auto;
+    max-width: 22rem;
+    padding: 2.1rem 1.4rem 1.4rem;
+    background: var(--white);
+    border: 2px solid var(--leaf);
+    border-radius: 18px 18px 26px 26px;
+    transform: rotate(-1.2deg);
+    box-shadow: 6px 7px 0 var(--dew);
+    text-align: left;
+  }
+  .tag::before {            /* punched hole */
+    content: "";
+    position: absolute;
+    top: 0.7rem;
+    left: 50%;
+    width: 13px;
+    height: 13px;
+    margin-left: -6.5px;
+    border: 2px solid var(--leaf);
+    border-radius: 50%;
+    background: var(--mist);
+  }
+
+  .tag dl { margin: 0; }
+  .tag dt {
+    font-size: 0.85rem;
+    color: var(--leaf);
+  }
+  .tag dd {
+    margin: 0 0 0.9rem;
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1.25rem;
+    line-height: 1.25;
+  }
+  .tag dd small {
+    display: block;
+    font-family: var(--body);
+    font-weight: 400;
+    font-size: 0.95rem;
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 0.3rem;
+  }
+  .links a {
+    flex: 1 1 auto;
+    white-space: nowrap;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    padding: 0.65rem 0.8rem;
+    border-radius: 999px;
+    border: 2px solid var(--leaf);
+    color: var(--fern);
+    transition: background 0.15s, color 0.15s;
+  }
+  .links a.primary {
+    background: var(--leaf);
+    color: var(--white);
+  }
+  .links a:hover {
+    background: var(--fern);
+    border-color: var(--fern);
+    color: var(--white);
+  }
+
+  .postscript {
+    margin: 1.4rem 0 0;
+    font-family: var(--display);
+    font-weight: 500;
+    color: var(--leaf);
+  }
+
+  [hidden] { display: none !important; }
+
+  /* ---------- the plant in the cup ---------- */
+
+  .line {
+    fill: none;
+    stroke: var(--fern);
+    stroke-width: 3.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .cup-body { fill: var(--white); }
+  .mound { fill: var(--dew); stroke: none; }
+
+  .draw {
+    stroke-dasharray: 1;
+    animation: draw 1s ease-out backwards;
+  }
+  .draw.d2 { animation-delay: 0.25s; }
+  .draw.d3 { animation-delay: 0.45s; }
+  @keyframes draw { from { stroke-dashoffset: 1; } }
+
+  .vine {
+    fill: none;
+    stroke: var(--leaf);
+    stroke-width: 3.2;
+    stroke-linecap: round;
+    stroke-dasharray: 1;
+    animation: draw 1.7s 0.7s ease-in-out backwards;
+  }
+
+  .growth {
+    transform-origin: 120px 214px;
+    animation: breathe 5s 2.8s ease-in-out infinite alternate;
+  }
+  @keyframes breathe {
+    from { transform: rotate(-1.6deg); }
+    to   { transform: rotate(1.6deg); }
+  }
+
+  .leaf {
+    animation: sprout 0.6s
+      cubic-bezier(0.3, 1.6, 0.5, 1) backwards;
+  }
+  .leaf path { fill: var(--sprout); }
+  .leaf line {
+    stroke: var(--leaf);
+    stroke-width: 1.4;
+    stroke-linecap: round;
+  }
+  .leaf.dark path { fill: var(--leaf); }
+  .leaf.dark line { stroke: var(--fern); }
+  .l1 { animation-delay: 1.1s; }
+  .l2 { animation-delay: 1.4s; }
+  .l3 { animation-delay: 1.65s; }
+  .l4 { animation-delay: 1.9s; }
+  .l5 { animation-delay: 2.1s; }
+  .l6 { animation-delay: 2.35s; }
+  @keyframes sprout { from { transform: scale(0); } }
+
+  .heart {
+    fill: var(--white);
+    stroke: var(--leaf);
+    stroke-width: 1.6;
+    stroke-linejoin: round;
+    animation: rise 0.6s 1.2s ease-out backwards;
+  }
+
+  .blossom { transform: scale(0); }
+  .blossom circle {
+    fill: var(--white);
+    stroke: var(--leaf);
+    stroke-width: 1.3;
+  }
+  .blossom .eye { fill: var(--sprout); }
+
+  .said-yes .blossom {
+    animation: bloom 0.7s
+      cubic-bezier(0.3, 1.7, 0.5, 1) forwards;
+  }
+  .said-yes .b2 { animation-delay: 0.15s; }
+  .said-yes .b3 { animation-delay: 0.3s; }
+  @keyframes bloom {
+    from { transform: scale(0) rotate(-90deg); }
+    to   { transform: scale(1) rotate(0deg); }
+  }
+
+  .said-yes .heart {
+    fill: var(--leaf);
+    animation: beat 1.1s 0.2s ease-in-out infinite;
+  }
+  @keyframes beat {
+    0%, 100% { transform: scale(1); }
+    30%      { transform: scale(1.25); }
+    45%      { transform: scale(1.05); }
+    60%      { transform: scale(1.2); }
+  }
+
+  /* leaves thrown when she says yes */
+  .burst-leaf {
+    position: fixed;
+    border-radius: 100% 0 100% 0;
+    pointer-events: none;
+    z-index: 5;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+    .drift { display: none; }
+    .sprig--bottom { transform: rotate(180deg); }
+    .said-yes .blossom { transform: scale(1); }
+  }
+</style>
+</head>
+
+<body>
+
+<!-- background: drifting leaves and two corner sprigs -->
+<div aria-hidden="true">
+  <span class="drift"></span><span class="drift"></span>
+  <span class="drift"></span><span class="drift"></span>
+  <span class="drift"></span><span class="drift"></span>
+</div>
+
+<svg class="sprig sprig--top" viewBox="0 0 300 300"
+     aria-hidden="true">
+  <use href="#sprig"/>
+</svg>
+<svg class="sprig sprig--bottom" viewBox="0 0 300 300"
+     aria-hidden="true">
+  <use href="#sprig"/>
+</svg>
+
+<svg width="0" height="0" style="position:absolute"
+     aria-hidden="true">
+  <defs>
+    <path id="bigleaf"
+      d="M0 0 C 16 -26, 52 -26, 68 0
+         C 52 26, 16 26, 0 0 Z"/>
+    <g id="sprig" fill="currentColor">
+      <path d="M0 0 C 70 50, 150 120, 250 270"
+        fill="none" stroke="currentColor"
+        stroke-width="5" stroke-linecap="round"/>
+      <use href="#bigleaf"
+        transform="translate(40 32) rotate(-20)"/>
+      <use href="#bigleaf"
+        transform="translate(46 38) rotate(95)"/>
+      <use href="#bigleaf"
+        transform="translate(98 86) rotate(-5)"/>
+      <use href="#bigleaf"
+        transform="translate(104 92) rotate(105)"/>
+      <use href="#bigleaf"
+        transform="translate(158 150) rotate(8)"/>
+      <use href="#bigleaf"
+        transform="translate(164 158) rotate(112)"/>
+      <use href="#bigleaf"
+        transform="translate(210 216) rotate(20)"/>
+      <use href="#bigleaf"
+        transform="translate(250 270) rotate(60) scale(.8)"/>
+    </g>
+  </defs>
+</svg>
+
+<main>
+
+  <!-- a coffee cup with a plant growing where the steam goes -->
+  <svg class="plant" viewBox="40 0 160 300" role="img"
+       aria-label="A coffee cup with a leafy vine growing out of it">
+
+    <g class="growth">
+      <path class="vine" pathLength="1"
+        d="M120 214 C 120 190, 96 180, 104 152
+           C 112 124, 140 122, 134 92
+           C 129 66, 108 60, 116 34"/>
+
+      <g transform="translate(109 184) rotate(-155)">
+        <g class="leaf l1">
+          <path d="M0 0 C 8 -13, 26 -13, 34 0
+                   C 26 13, 8 13, 0 0 Z"/>
+          <line x1="2" y1="0" x2="26" y2="0"/>
+        </g>
+      </g>
+      <g transform="translate(104 152) rotate(-25)">
+        <g class="leaf dark l2">
+          <path d="M0 0 C 8 -13, 26 -13, 34 0
+                   C 26 13, 8 13, 0 0 Z"/>
+          <line x1="2" y1="0" x2="26" y2="0"/>
+        </g>
+      </g>
+      <g transform="translate(124 123) rotate(-160)">
+        <g class="leaf dark l3">
+          <path d="M0 0 C 8 -13, 26 -13, 34 0
+                   C 26 13, 8 13, 0 0 Z"/>
+          <line x1="2" y1="0" x2="26" y2="0"/>
+        </g>
+      </g>
+      <g transform="translate(134 92) rotate(-20)">
+        <g class="leaf l4">
+          <path d="M0 0 C 8 -13, 26 -13, 34 0
+                   C 26 13, 8 13, 0 0 Z"/>
+          <line x1="2" y1="0" x2="26" y2="0"/>
+        </g>
+      </g>
+      <g transform="translate(120 63) rotate(-150) scale(.85)">
+        <g class="leaf l5">
+          <path d="M0 0 C 8 -13, 26 -13, 34 0
+                   C 26 13, 8 13, 0 0 Z"/>
+          <line x1="2" y1="0" x2="26" y2="0"/>
+        </g>
+      </g>
+      <g transform="translate(116 34) rotate(-50) scale(.7)">
+        <g class="leaf dark l6">
+          <path d="M0 0 C 8 -13, 26 -13, 34 0
+                   C 26 13, 8 13, 0 0 Z"/>
+          <line x1="2" y1="0" x2="26" y2="0"/>
+        </g>
+      </g>
+
+      <!-- these open when she says yes -->
+      <g transform="translate(114 30)">
+        <g class="blossom b1">
+          <circle cx="0" cy="-6.5" r="5"/>
+          <circle cx="6.2" cy="-2" r="5"/>
+          <circle cx="3.8" cy="5.3" r="5"/>
+          <circle cx="-3.8" cy="5.3" r="5"/>
+          <circle cx="-6.2" cy="-2" r="5"/>
+          <circle class="eye" cx="0" cy="0" r="3.4"/>
+        </g>
+      </g>
+      <g transform="translate(138 106) scale(.8)">
+        <g class="blossom b2">
+          <circle cx="0" cy="-6.5" r="5"/>
+          <circle cx="6.2" cy="-2" r="5"/>
+          <circle cx="3.8" cy="5.3" r="5"/>
+          <circle cx="-3.8" cy="5.3" r="5"/>
+          <circle cx="-6.2" cy="-2" r="5"/>
+          <circle class="eye" cx="0" cy="0" r="3.4"/>
+        </g>
+      </g>
+      <g transform="translate(98 166) scale(.7)">
+        <g class="blossom b3">
+          <circle cx="0" cy="-6.5" r="5"/>
+          <circle cx="6.2" cy="-2" r="5"/>
+          <circle cx="3.8" cy="5.3" r="5"/>
+          <circle cx="-3.8" cy="5.3" r="5"/>
+          <circle cx="-6.2" cy="-2" r="5"/>
+          <circle class="eye" cx="0" cy="0" r="3.4"/>
+        </g>
+      </g>
+    </g>
+
+    <path class="mound" d="M82 217 Q120 196 158 217 Z"/>
+    <path class="line cup-body draw" pathLength="1"
+      d="M72 216 L168 216 L158 272
+         Q156 282 146 282 L94 282
+         Q84 282 82 272 Z"/>
+    <path class="line draw d2" pathLength="1"
+      d="M166 228 C 194 226, 192 264, 160 260"/>
+    <path class="line draw d3" pathLength="1"
+      d="M58 292 L182 292"/>
+
+    <g transform="translate(120 250) scale(1.7)">
+      <path class="heart"
+        d="M0 5 C -9 -1, -5 -9, 0 -4
+           C 5 -9, 9 -1, 0 5 Z"/>
+    </g>
+  </svg>
+
+  <p class="greeting" id="greeting">Hey you,</p>
+  <h1 id="headline" tabindex="-1">Coffee with me?</h1>
+  <p class="lede" id="lede">
+    I know a spot in Fredericksburg that roasts its own
+    beans. They pour loose leaf tea too, if that's more
+    your thing.
+  </p>
+
+  <div class="choices" id="choices">
+    <button class="yes" id="yes" type="button">
+      Yes, let's go
+    </button>
+    <button class="no" id="no" type="button">
+      No thanks
+    </button>
+    <p class="hint" id="hint" aria-live="polite"></p>
+  </div>
+
+  <section class="details" id="details" hidden>
+    <div class="tag">
+      <dl>
+        <dt>Where</dt>
+        <dd>
+          <span id="placeName"></span>
+          <small id="placeTown"></small>
+        </dd>
+        <dt>When</dt>
+        <dd>
+          <span id="day"></span>
+          <small id="time"></small>
+        </dd>
+      </dl>
+      <div class="links">
+        <a class="primary" id="mapLink" target="_blank"
+           rel="noopener">Get directions</a>
+        <a id="menuLink" target="_blank"
+           rel="noopener">See the drink menu</a>
+      </div>
+    </div>
+    <p class="postscript">
+      Text me so I know it's official.
+    </p>
+  </section>
+
+</main>
+
+<script>
+  /* =====================================================
+     EDIT THESE. Everything personal lives right here.
+     ===================================================== */
+  const CONFIG = {
+    herName: "Luisa",   // "Sarah" -> "Hey Sarah,"  ("" -> "Hey you,")
+    day: "Saturday, October 10",
+    time: "10:00 in the morning",
+
+    placeName: "Battlefield Coffee Company",
+    placeTown: "Fredericksburg, Virginia",
+    mapUrl:
+      "https://www.google.com/maps/place/" +
+      "Battlefield+Coffee+Company/" +
+      "@38.29419,-77.5960389,17z/" +
+      "data=!3m1!4b1!4m6!3m5!" +
+      "1s0x89b6bf99456ec0ad:0x7a49e3aeb271a643!" +
+      "8m2!3d38.29419!4d-77.593464!" +
+      "16s%2Fg%2F11p6xqnszm",
+    menuUrl: "https://battlefieldcoffee.com/pages/menu",
+
+    yesHeadline: "It's a date.",
+    yesLede: "I'll bring the conversation. You just bring you.",
+  };
+  /* ===================================================== */
+
+  const $ = (id) => document.getElementById(id);
+  const reducedMotion = window
+    .matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // fill in the personal bits
+  if (CONFIG.herName.trim()) {
+    $("greeting").textContent =
+      "Hey " + CONFIG.herName.trim() + ",";
+  }
+  $("placeName").textContent = CONFIG.placeName;
+  $("placeTown").textContent = CONFIG.placeTown;
+  $("day").textContent = CONFIG.day;
+  $("time").textContent = CONFIG.time;
+  $("mapLink").href = CONFIG.mapUrl;
+  $("menuLink").href = CONFIG.menuUrl;
+
+  // "No thanks" is a leaf, and leaves blow away
+  const noMoves = [
+    {
+      to: "translate(66px, 14px) rotate(9deg)",
+      say: "Oops, the wind caught that one.",
+    },
+    {
+      to: "translate(-74px, 30px) rotate(-12deg)",
+      say: "Slippery little leaf.",
+    },
+  ];
+  let noCount = 0;
+
+  $("no").addEventListener("click", () => {
+    const no = $("no");
+    if (noCount < noMoves.length) {
+      no.style.transform = noMoves[noCount].to;
+      $("hint").textContent = noMoves[noCount].say;
+      noCount += 1;
+      return;
+    }
+    no.classList.add("gone");
+    $("hint").textContent =
+      "And it blew away. One button left.";
+    $("yes").focus();
+    setTimeout(() => { no.hidden = true; }, 900);
+  });
+
+  // yes: bloom, throw leaves, show the details
+  $("yes").addEventListener("click", () => {
+    throwLeaves($("yes"));
+    document.body.classList.add("said-yes");
+
+    const h1 = $("headline");
+    h1.textContent = CONFIG.yesHeadline;
+    h1.classList.add("swap");
+    $("lede").textContent = CONFIG.yesLede;
+
+    $("choices").hidden = true;
+    $("details").hidden = false;
+    h1.focus({ preventScroll: true });
+  });
+
+  function throwLeaves(fromEl) {
+    if (reducedMotion) return;
+    const box = fromEl.getBoundingClientRect();
+    const cx = box.left + box.width / 2;
+    const cy = box.top + box.height / 2;
+    const greens = ["#3f8f5b", "#9ccb8a", "#dcebd6", "#1f4d36"];
+
+    for (let i = 0; i < 30; i += 1) {
+      const leaf = document.createElement("span");
+      const size = 10 + Math.random() * 14;
+      leaf.className = "burst-leaf";
+      leaf.style.left = cx + "px";
+      leaf.style.top = cy + "px";
+      leaf.style.width = size + "px";
+      leaf.style.height = size + "px";
+      leaf.style.background = greens[i % greens.length];
+      document.body.appendChild(leaf);
+
+      const angle = Math.random() * Math.PI * 2;
+      const reach = 90 + Math.random() * 190;
+      const dx = Math.cos(angle) * reach;
+      const dy = Math.sin(angle) * reach - 90;
+      const spin = (Math.random() * 2 - 1) * 540;
+
+      const flight = leaf.animate(
+        [
+          {
+            transform:
+              "translate(-50%, -50%) scale(0.2)",
+            opacity: 1,
+          },
+          {
+            transform:
+              `translate(calc(-50% + ${dx}px), ` +
+              `calc(-50% + ${dy}px)) ` +
+              `rotate(${spin * 0.6}deg)`,
+            opacity: 1,
+            offset: 0.4,
+          },
+          {
+            transform:
+              `translate(calc(-50% + ${dx * 1.15}px), ` +
+              `calc(-50% + ${dy + 280}px)) ` +
+              `rotate(${spin}deg)`,
+            opacity: 0,
+          },
+        ],
+        {
+          duration: 1700 + Math.random() * 900,
+          easing: "cubic-bezier(0.2, 0.7, 0.3, 1)",
+          fill: "forwards",
+        }
+      );
+      flight.onfinish = () => leaf.remove();
+    }
+  }
+</script>
+</body>
+</html>
